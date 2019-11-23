@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+
 return [
     // Provides application-wide services.
     // We recommend using fully-qualified class names whenever possible as
@@ -21,6 +22,10 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
+            Doctrine\Common\Cache\Cache::class => App\Container\DoctrineRedisCacheFactory::class,
+            Doctrine\ORM\EntityManager::class  => \ContainerInteropDoctrine\EntityManagerFactory::class,
+            'doctrine.entity_manager.orm_other' => [\ContainerInteropDoctrine\EntityManagerFactory::class, 'orm_other'],
+            'doctrine.entity_manager.orm_default' => \ContainerInteropDoctrine\EntityManagerFactory::class,
         ],
     ],
 ];

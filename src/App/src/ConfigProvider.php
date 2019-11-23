@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
+
+use ContainerInteropDoctrine\EntityManagerFactory;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+
 /**
  * The configuration provider for the App module
  *
@@ -23,6 +29,7 @@ class ConfigProvider
         return [
             'dependencies' => $this->getDependencies(),
             'templates'    => $this->getTemplates(),
+            'doctrine'    => $this->getDoctrineEntities(),
         ];
     }
 
@@ -37,6 +44,9 @@ class ConfigProvider
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                'doctrine.entity_manager.orm_other' => EntityManagerFactory::class,
+                'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
+                EntityManager::class =>  EntityManagerFactory::class,
             ],
         ];
     }
@@ -52,6 +62,25 @@ class ConfigProvider
                 'error'  => [__DIR__ . '/../templates/error'],
                 'layout' => [__DIR__ . '/../templates/layout'],
             ],
+        ];
+    }
+
+    private function getDoctrineEntities()
+    {
+        return [
+            'driver' => [
+                'orm_default' => [
+                    'class' => MappingDriverChain::class,
+                    'drivers' => [
+                        'App\Entity' => 'app_entity',
+                    ],
+                ],
+                'app_entity' => [
+                    'class' => AnnotationDriver::class,
+                    'cache' => 'array',
+                    'paths' => [__DIR__ . '/Entity']
+                ],
+            ]
         ];
     }
 }

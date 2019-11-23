@@ -1,4 +1,6 @@
 cache
+cache/config-cache2.php
+cache/config-cache.php
 !cache
 !cache/.gitkeep
 !.gitignore

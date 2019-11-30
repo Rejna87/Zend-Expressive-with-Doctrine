@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use App\Service\AuthService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,19 +26,24 @@ class HomePageHandler implements RequestHandlerInterface
 
     /** @var null|TemplateRendererInterface */
     private $template;
+    /** @var AuthService */
+    private $authService;
 
     public function __construct(
         string $containerName,
         Router\RouterInterface $router,
+        AuthService $authService,
         ?TemplateRendererInterface $template = null
     ) {
         $this->containerName = $containerName;
         $this->router        = $router;
         $this->template      = $template;
+        $this->authService = $authService;
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
+        $this->authService->checkLogin();
         if ($this->template === null) {
             return new JsonResponse([
                 'welcome' => 'Congratulations! You have installed the zend-expressive skeleton application.',

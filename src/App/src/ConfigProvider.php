@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App;
 
 
+use App\Service\AuthService;
+use App\Service\AuthServiceFactory;
 use ContainerInteropDoctrine\EntityManagerFactory;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\EntityManager;
@@ -47,6 +49,7 @@ class ConfigProvider
                 'doctrine.entity_manager.orm_other' => EntityManagerFactory::class,
                 'doctrine.entity_manager.orm_default' => EntityManagerFactory::class,
                 EntityManager::class =>  EntityManagerFactory::class,
+                AuthService::class => AuthServiceFactory::class,
             ],
         ];
     }

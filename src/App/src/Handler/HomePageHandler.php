@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Plates\PlatesRenderer;
 use Zend\Expressive\Router;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -43,7 +44,10 @@ class HomePageHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $this->authService->checkLogin();
+        $this->authService->prepareSession($request);
+        if(!$this->authService->checkCurrentLogin()) {
+            return new RedirectResponse('/login');
+        }
         if ($this->template === null) {
             return new JsonResponse([
                 'welcome' => 'Congratulations! You have installed the zend-expressive skeleton application.',

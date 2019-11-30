@@ -37,4 +37,5 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
     $app->get('/login', Auth\Handler\LoginHandler::class, 'auth.login');
     $app->post('/login', Auth\Handler\LoginHandler::class, 'auth.login.post');
+    $app->get('/logout', Auth\Handler\LogoutHandler::class, 'auth.logout');
 };

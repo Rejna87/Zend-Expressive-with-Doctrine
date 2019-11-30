@@ -14,17 +14,14 @@ use Zend\Form\FormElementManagerFactory;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\Form\FormElementManager;
 
-class LoginHandlerFactory implements FactoryInterface
+class LogoutHandlerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null) :RequestHandlerInterface
     {
         /** @var TemplateRendererInterface $template */
         $template = $container->get(TemplateRendererInterface::class);
-        /** @var LoginForm $loginForm */
-        $loginForm = $container->get(FormElementManager::class)
-            ->get(LoginForm::class);
         $authService = $container->get(AuthService::class);
-        return new LoginHandler($template, $authService, $loginForm);
+        return new LogoutHandler($template, $authService);
     }
 
 

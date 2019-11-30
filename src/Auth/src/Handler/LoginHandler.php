@@ -4,12 +4,15 @@
 namespace Auth\Handler;
 
 
+use App\Entity\UserEntity;
 use App\Service\AuthService;
 use Auth\Form\LoginForm;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Expressive\Session\SessionInterface;
+use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LoginHandler implements RequestHandlerInterface
@@ -36,19 +39,23 @@ class LoginHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $this->authService->prepareSession($request);
+        /** @var SessionInterface $session */
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+
+        $userId = 0;
         $valid = 0;
         if($request->getMethod() === 'POST') {
             $valid = 2;
             $this->loginForm->setData($request->getParsedBody());
             if($this->loginForm->isValid()) {
                 $post = $request->getParsedBody();
-                $userEntity = $this->authService->checkLogin($post['username'], $post['password']);
-                if(!is_null($userEntity)) {
-                    $valid = 1;
-                } else {
-                    $valid = 3;
-                }
+                $this->authService->checkLogin($post['username'], $post['password']);
             }
+        }
+
+        if($session->has('userId')) {
+            $userId = $session->get('userId');
         }
 
         return new HtmlResponse(
@@ -56,7 +63,7 @@ class LoginHandler implements RequestHandlerInterface
                 'test' => 'test',
                 'form' => $this->loginForm,
                 'validTest' => $valid,
-//                'urlCol' => $urlCollection,
+                'userId' => $userId,
             ])
         );
     }

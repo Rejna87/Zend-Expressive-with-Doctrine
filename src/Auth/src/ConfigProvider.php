@@ -7,6 +7,8 @@ namespace Auth;
 
 use Auth\Handler\LoginHandler;
 use Auth\Handler\LoginHandlerFactory;
+use Auth\Handler\LogoutHandler;
+use Auth\Handler\LogoutHandlerFactory;
 
 class ConfigProvider
 {
@@ -37,6 +39,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 LoginHandler::class => LoginHandlerFactory::class,
+                LogoutHandler::class => LogoutHandlerFactory::class,
             ],
         ];
     }

@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 
+use App\Entity\UserEntity;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
@@ -12,7 +13,7 @@ class UserRepository extends EntityRepository
      * @param string $password
      */
     private function hashPassword(&$password) {
-
+        $password = hash('sha256', $password);
     }
 
     /**
@@ -29,6 +30,12 @@ class UserRepository extends EntityRepository
         ]);
 
         return $userEntity;
+    }
+
+
+    public function update(UserEntity $userEntity) {
+        $this->getEntityManager()->persist($userEntity);
+        $this->getEntityManager()->flush();
     }
 
 }

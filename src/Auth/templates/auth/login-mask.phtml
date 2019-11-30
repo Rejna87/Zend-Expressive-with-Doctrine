@@ -1,10 +1,12 @@
 <h1>Login</h1>
-<?=$validTest; ?>
+Login Erfolgreich: <?=$validTest; ?>
 <?php
 /** @var \Auth\Form\LoginForm $form */
-/** @var array $urlCol */
+/** @var int $userId */
 
 $form->prepare();
 
 echo $this->form($form);
+
 ?>
+Login Erfolgreich gespeichert: <?=$userId; ?>

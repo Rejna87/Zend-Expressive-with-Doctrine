@@ -6,13 +6,13 @@ namespace Auth\Handler;
 
 
 use App\Service\AuthService;
+use Auth\Form\LoginForm;
 use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\Form\FormElementManagerFactory;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\Form\FormElementManager;
 
 class LoginHandlerFactory implements FactoryInterface
 {
@@ -20,9 +20,12 @@ class LoginHandlerFactory implements FactoryInterface
     {
         /** @var TemplateRendererInterface $template */
         $template = $container->get(TemplateRendererInterface::class);
+        /** @var LoginForm $loginForm */
+        $loginForm = $container->get(FormElementManager::class)
+            ->get(LoginForm::class);
         /** @var AuthService $authService */
         $authService = $container->get(AuthService::class);
-        return new LoginHandler($template, $authService);
+        return new LoginHandler($template, $authService, $loginForm);
     }
 
 

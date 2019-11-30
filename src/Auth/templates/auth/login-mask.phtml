@@ -1,4 +1,10 @@
+<h1>Login</h1>
+<?=$validTest; ?>
 <?php
+/** @var \Auth\Form\LoginForm $form */
+/** @var array $urlCol */
 
+$form->prepare();
+
+echo $this->form($form);
 ?>
-<h1><?=$this->test?></h1>

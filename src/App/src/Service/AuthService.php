@@ -20,8 +20,8 @@ class AuthService
         $this->userRepository = $userRepository;
     }
 
-    public function checkLogin() {
-        $userEntity = $this->userRepository->checkLogin('ShinoRej2', 'Test123');
+    public function checkLogin($userName, $userPassword) {
+        $userEntity = $this->userRepository->checkLogin($userName, $userPassword);
 
         return $userEntity;
     }

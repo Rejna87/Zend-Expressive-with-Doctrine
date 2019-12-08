@@ -61,6 +61,20 @@ class UserEntity
     private $lastActivity;
 
     /**
+     * @var UserGroupEntity
+     * @ORM\ManyToOne(targetEntity="UserGroupEntity")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $userGroup;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="disabled", type="boolean", options={"unsigned":true, "default":true})
+     */
+    private $disabled;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -186,6 +200,38 @@ class UserEntity
     public function setLastActivity(\DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisabled(): string
+    {
+        return $this->disabled;
+    }
+
+    /**
+     * @param string $disabled
+     */
+    public function setDisabled(string $disabled): void
+    {
+        $this->disabled = $disabled;
+    }
+
+    /**
+     * @return UserGroupEntity
+     */
+    public function getUserGroup(): UserGroupEntity
+    {
+        return $this->userGroup;
+    }
+
+    /**
+     * @param UserGroupEntity $userGroup
+     */
+    public function setUserGroup(UserGroupEntity $userGroup): void
+    {
+        $this->userGroup = $userGroup;
     }
 
 

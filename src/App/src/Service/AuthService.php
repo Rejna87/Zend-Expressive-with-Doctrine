@@ -40,6 +40,7 @@ class AuthService
         if (!is_null($userEntity)) {
             $valid = 1;
             $sessionKey = md5($userEntity->getId() . '_' . $userEntity->getUsername() . '_' . time());
+            $this->session->set('userGroupId', $userEntity->getUserGroup()->getId());
             $this->session->set('userId', $userEntity->getId());
             $this->session->set('sessionKey', $sessionKey);
 
@@ -50,6 +51,13 @@ class AuthService
             $valid = 3;
         }
         return $userEntity;
+    }
+
+    public function isAdmin() {
+        if($this->session->get('userGroupId') == 1) {
+            return true;
+        }
+        return false;
     }
 
 

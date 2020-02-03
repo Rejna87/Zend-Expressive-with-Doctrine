@@ -51,7 +51,7 @@ class UserEntity
     private $mail;
     /**
      * @var string
-     * @ORM\Column(name="session_key", type="string", length=50, nullable=true))
+     * @ORM\Column(name="session_key", type="string", length=50, nullable=true)
      */
     private $sessionKey;
     /**
@@ -70,7 +70,7 @@ class UserEntity
 
     /**
      * @var string
-     * @ORM\Column(name="disabled", type="boolean", options={"unsigned":true, "default":true})
+     * @ORM\Column(name="disabled", type="boolean", options={"unsigned":true, "default":false})
      */
     private $disabled;
 
@@ -187,9 +187,9 @@ class UserEntity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getLastActivity(): \DateTime
+    public function getLastActivity()
     {
         return $this->lastActivity;
     }
@@ -227,7 +227,7 @@ class UserEntity
     }
 
     /**
-     * @param UserGroupEntity $userGroup
+     * @param UserGroupEntity|int $userGroup
      */
     public function setUserGroup(UserGroupEntity $userGroup): void
     {

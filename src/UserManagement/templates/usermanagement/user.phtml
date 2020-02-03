@@ -1,0 +1,17 @@
+<?php
+/** @var $form \UserManagement\Form\UserForm */
+$form->prepare();
+
+?>
+<a class="btn btn-primary" href="<?=$this->url('user.list');?>">Benutzerliste</a>
+<?= $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-12"><?=$this->formRow($form->get('username'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('password'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('mail'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('firstname'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('lastname'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('userGroup'))?></div>
+    <div class="col-12"><?=$this->formRow($form->get('submit'))?></div>
+</div>
+<?= $this->form()->closeTag(); ?>

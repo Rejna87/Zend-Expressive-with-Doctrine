@@ -31,7 +31,7 @@ class UserGroupEntity
     private $name;
     /**
      * @var string
-     * @ORM\Column(name="disabled", type="boolean", options={"unsigned":true, "default":true})
+     * @ORM\Column(name="disabled", type="boolean", options={"unsigned":true, "default":false})
      */
     private $disabled;
 
@@ -87,6 +87,14 @@ class UserGroupEntity
     public function setDisabled(string $disabled): void
     {
         $this->disabled = $disabled;
+    }
+
+    /**
+     * @return UserEntity[]
+     */
+    public function getUser(): array
+    {
+        return $this->user;
     }
 
 

@@ -1,0 +1,31 @@
+<?php
+ /** @var $users \App\Entity\UserEntity[]|null */
+?>
+<h1>Hier kommt die Benutzerliste hin</h1>
+<?php if(isset($_GET['created'])): ?>
+<div class="alert alert-success">
+    Benutzer wurde erfolgreich angelegt.
+</div>
+<?php endif; ?>
+<a class="btn btn-primary" href="<?=$this->url('user.create');?>">Benutzer erstellen</a>
+<table class="table table-striped">
+    <tr>
+        <th>Benutzername</th>
+        <th>Benutzer Gruppe</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Letzter Login</th>
+        <th>Edit</th>
+    </tr>
+    <?php foreach ($users AS $user): ?>
+    <tr>
+        <td><?=$user->getUsername()?></td>
+        <td><?=$user->getUserGroup()->getName()?></td>
+        <td><?=$user->getFirstName()?></td>
+        <td><?=$user->getLastName()?></td>
+        <?php $userLastActivity = $user->getLastActivity(); ?>
+        <td><?=(!is_null($userLastActivity)?$userLastActivity->format('d.m.Y'): '')?></td>
+        <td><a class="btn btn-primary" href="<?=$this->url('user.edit', ['id' => $user->getId()]);?>">bearbeiten</a></td>
+    </tr>
+    <?php endforeach; ?>
+</table>

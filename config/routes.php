@@ -38,4 +38,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/login', Auth\Handler\LoginHandler::class, 'auth.login');
     $app->post('/login', Auth\Handler\LoginHandler::class, 'auth.login.post');
     $app->get('/logout', Auth\Handler\LogoutHandler::class, 'auth.logout');
+    $app->get('/user/list', UserManagement\Handler\UserListHandler::class, 'user.list');
+    $app->get('/user/create', UserManagement\Handler\CreateUserHandler::class, 'user.create');
+    $app->post('/user/create', UserManagement\Handler\CreateUserHandler::class, 'user.create.post');
+    $app->get('/user/edit/:id', UserManagement\Handler\EditUserHandler::class, 'user.edit');
+    $app->post('/user/edit/:id', UserManagement\Handler\EditUserHandler::class, 'user.edit.post');
 };
